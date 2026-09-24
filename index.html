@@ -418,7 +418,7 @@
           <button type="submit" id="submitBtn">JOIN →</button>
         </div>
         <p class="status" id="status" role="status"></p>
-        <p class="fineprint">Tapping join opens your email app with everything filled in — just hit send. We'll never share your address.<br>No mail app handy? Write to <a id="mailFallback" href="#"></a> yourself.</p>
+        <p class="fineprint">One tap, saved straight away — no mail app, nothing else. We'll never share your address.<br>Trouble joining? Write to <a href="mailto:hello@slowdial.app">hello@slowdial.app</a> yourself.</p>
       </form>
     </div>
   </section>
@@ -434,12 +434,6 @@
 
 <script>
 (function(){
-  // ---- Configuration -------------------------------------------------
-  // The address signups land in. This is a placeholder — swap in a real
-  // inbox (a brand address once one exists — see Content Studio → account
-  // setup in the Notion project) and republish.
-  var WAITLIST_EMAIL = "hello@slowdial.app";
-
   document.getElementById('year').textContent = new Date().getFullYear();
 
   var clockEl = document.getElementById('clock');
@@ -448,12 +442,6 @@
     var h = now.getHours() % 12 || 12;
     var m = String(now.getMinutes()).padStart(2, '0');
     clockEl.textContent = h + ':' + m;
-  }
-
-  var fallback = document.getElementById('mailFallback');
-  if (fallback) {
-    fallback.textContent = WAITLIST_EMAIL;
-    fallback.href = 'mailto:' + WAITLIST_EMAIL;
   }
 
   var statusEl = document.getElementById('status');
@@ -474,11 +462,28 @@
       return;
     }
     submitBtn.disabled = true;
-    var subject = encodeURIComponent('Add me to the Slow Dial waitlist');
-    var body = encodeURIComponent('Please add this address to the waitlist: ' + value);
-    window.location.href = 'mailto:' + WAITLIST_EMAIL + '?subject=' + subject + '&body=' + body;
-    setStatus('Opening your email app — hit send to finish joining.', 'ok');
-    setTimeout(function () { submitBtn.disabled = false; }, 1200);
+    setStatus('Joining…', null);
+
+    fetch('/api/join', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: value })
+    })
+      .then(function (res) {
+        if (!res.ok) throw new Error('request failed');
+        return res.json();
+      })
+      .then(function (data) {
+        if (!data.ok) throw new Error(data.error || 'unknown');
+        setStatus("You're on the list. We'll email you when it's ready.", 'ok');
+        emailInput.value = '';
+      })
+      .catch(function () {
+        setStatus("Something went wrong — try again in a moment, or email hello@slowdial.app.", 'err');
+      })
+      .finally(function () {
+        submitBtn.disabled = false;
+      });
   });
 })();
 </script>
