@@ -30,7 +30,7 @@
   }
   ::selection{background:var(--accent);color:var(--accent-ink)}
   .wrap{
-    max-width:760px;
+    max-width:1120px;
     margin:0 auto;
     padding:0 24px;
   }
@@ -82,6 +82,23 @@
     max-width:52ch;
   }
 
+  /* ---------- hero + how-it-works beside the keypad ---------- */
+  .hero-split{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) 340px;
+    gap:56px;
+    align-items:start;
+  }
+  .device-col{
+    position:sticky;
+    top:40px;
+    padding-top:min(14vh,120px);
+  }
+  @media (max-width:860px){
+    .hero-split{grid-template-columns:1fr}
+    .device-col{position:static;padding-top:0;margin-top:28px}
+  }
+
   /* ---------- the device mockup ---------- */
   .device{
     background:var(--panel);
@@ -89,7 +106,6 @@
     border-radius:22px;
     padding:18px 18px 20px;
     box-shadow:0 40px 70px -46px #2c2a1f3d;
-    margin-top:14px;
   }
   .device-head{
     display:flex;
@@ -247,6 +263,7 @@
 
   /* ---------- waitlist ---------- */
   .waitlist{
+    max-width:640px;
     background:var(--panel);
     border:1px solid var(--rule);
     border-radius:16px;
@@ -330,79 +347,85 @@
     <div class="tag">01 · WAITLIST</div>
   </div>
 
-  <div class="hero">
-    <h1>Turn your iPhone into a <em>flip phone.</em><br>Keep everything it can do.</h1>
-    <p class="lede">A keypad on your home screen. Nine people, not nine apps. Everything distracting is one slow, deliberate dial away.</p>
-
-    <div class="device" aria-hidden="true">
-      <div class="device-head">
-        <span>●●●● WIFI</span>
-        <div class="dots"><span></span><span></span><span></span></div>
-        <span id="clock">9:41</span>
+  <div class="hero-split">
+    <div class="hero-col">
+      <div class="hero">
+        <h1>Turn your iPhone into a <em>flip phone.</em><br>Keep everything it can do.</h1>
+        <p class="lede">A keypad on your home screen. Nine people, not nine apps. Everything distracting is one slow, deliberate dial away.</p>
       </div>
-      <div class="screen">
-        <div class="screen-row">
-          <span>▂▄▆█ SIGNAL</span>
-          <span>MON, 1 JAN</span>
+
+      <section id="why">
+        <p class="eyebrow">THE PROBLEM</p>
+        <h2>People are already paying hundreds of dollars to get away from this.</h2>
+        <p class="prose">I'm a medical student, and somewhere between lectures and late nights I noticed I was reaching for my phone at the exact same reflex speed as everyone else — for no real reason, dozens of times a day. People already pay real money for a modern flip phone to get some distance from that, and give up half of what their phone actually does in the trade. <strong>I didn't want to give any of it up.</strong> So I built the thing I actually wanted: the flip phone feeling, on the iPhone already in my pocket. Nothing new to buy, nothing thrown away — just a different front door to the same phone. It's helped me. Figured it might help you too.</p>
+        <p class="quote">Slow Dial is the free version of that feeling — <b>on the phone you already own.</b> Nothing to buy, nothing to give up. Just a different front door to it.</p>
+      </section>
+
+      <hr class="rule">
+
+      <section id="how">
+        <p class="eyebrow">HOW IT WORKS</p>
+        <h2>Three small changes to your home screen.</h2>
+        <div class="steps">
+          <div class="step">
+            <div class="n">1</div>
+            <div>
+              <h3>Your home screen becomes a keypad.</h3>
+              <p>Nine keys, styled like an old backlit LCD. It sits over a matching wallpaper until the widget itself disappears.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="n">2</div>
+            <div>
+              <h3>Speed dial, but for people.</h3>
+              <p>Keys 1–9 are the people you actually talk to — a message or a call, one press. Apps live one key away, not scattered across a grid.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="n">3</div>
+            <div>
+              <h3>Distracting apps get a dial tone.</h3>
+              <p>Instagram isn't on the keypad. To open it, you spell its name on the keys and wait out a short call. Every call today makes the next one longer.</p>
+            </div>
+          </div>
         </div>
-        <div class="keypad">
-          <div class="key"><b>1</b><span>Mum</span></div>
-          <div class="key"><b>2</b><span>Dad</span></div>
-          <div class="key"><b>3</b><span>Friend</span></div>
-          <div class="key"><b>4</b><span>Maps</span></div>
-          <div class="key"><b>5</b><span>Notes</span></div>
-          <div class="key"><b>6</b><span>Calendar</span></div>
-          <div class="key"><b>7</b><span>Camera</span></div>
-          <div class="key"><b>8</b><span>Music</span></div>
-          <div class="key"><b>9</b><span>Messages</span></div>
-          <div class="key"><b>✱</b><span>Dial</span></div>
-          <div class="key"><b>0</b><span>Menu</span></div>
-          <div class="key"><b>#</b><span>Apps</span></div>
+      </section>
+    </div>
+
+    <div class="device-col">
+      <div class="device" aria-hidden="true">
+        <div class="device-head">
+          <span>●●●● WIFI</span>
+          <div class="dots"><span></span><span></span><span></span></div>
+          <span id="clock">9:41</span>
         </div>
-        <div class="screen-foot">
-          <span>SLOW DIAL</span>
-          <span>READY<span class="cursor"></span></span>
+        <div class="screen">
+          <div class="screen-row">
+            <span>▂▄▆█ SIGNAL</span>
+            <span>MON, 1 JAN</span>
+          </div>
+          <div class="keypad">
+            <div class="key"><b>1</b><span>Mum</span></div>
+            <div class="key"><b>2</b><span>Dad</span></div>
+            <div class="key"><b>3</b><span>Friend</span></div>
+            <div class="key"><b>4</b><span>Maps</span></div>
+            <div class="key"><b>5</b><span>Notes</span></div>
+            <div class="key"><b>6</b><span>Calendar</span></div>
+            <div class="key"><b>7</b><span>Camera</span></div>
+            <div class="key"><b>8</b><span>Music</span></div>
+            <div class="key"><b>9</b><span>Messages</span></div>
+            <div class="key"><b>✱</b><span>Dial</span></div>
+            <div class="key"><b>0</b><span>Menu</span></div>
+            <div class="key"><b>#</b><span>Apps</span></div>
+          </div>
+          <div class="screen-foot">
+            <span>SLOW DIAL</span>
+            <span>READY<span class="cursor"></span></span>
+          </div>
         </div>
       </div>
     </div>
   </div>
-
-  <section id="why">
-    <p class="eyebrow">THE PROBLEM</p>
-    <h2>People are already paying hundreds of dollars to get away from this.</h2>
-    <p class="prose">I'm a medical student, and somewhere between lectures and late nights I noticed I was reaching for my phone at the exact same reflex speed as everyone else — for no real reason, dozens of times a day. People already pay real money for a modern flip phone to get some distance from that, and give up half of what their phone actually does in the trade. <strong>I didn't want to give any of it up.</strong> So I built the thing I actually wanted: the flip phone feeling, on the iPhone already in my pocket. Nothing new to buy, nothing thrown away — just a different front door to the same phone. It's helped me. Figured it might help you too.</p>
-    <p class="quote">Slow Dial is the free version of that feeling — <b>on the phone you already own.</b> Nothing to buy, nothing to give up. Just a different front door to it.</p>
-  </section>
-
-  <hr class="rule">
-
-  <section id="how">
-    <p class="eyebrow">HOW IT WORKS</p>
-    <h2>Three small changes to your home screen.</h2>
-    <div class="steps">
-      <div class="step">
-        <div class="n">1</div>
-        <div>
-          <h3>Your home screen becomes a keypad.</h3>
-          <p>Nine keys, styled like an old backlit LCD. It sits over a matching wallpaper until the widget itself disappears.</p>
-        </div>
-      </div>
-      <div class="step">
-        <div class="n">2</div>
-        <div>
-          <h3>Speed dial, but for people.</h3>
-          <p>Keys 1–9 are the people you actually talk to — a message or a call, one press. Apps live one key away, not scattered across a grid.</p>
-        </div>
-      </div>
-      <div class="step">
-        <div class="n">3</div>
-        <div>
-          <h3>Distracting apps get a dial tone.</h3>
-          <p>Instagram isn't on the keypad. To open it, you spell its name on the keys and wait out a short call. Every call today makes the next one longer.</p>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <hr class="rule">
 
