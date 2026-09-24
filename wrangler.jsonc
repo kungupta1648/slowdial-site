@@ -1,0 +1,20 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "slowdial-site",
+  "compatibility_date": "2026-09-21",
+  "main": "worker.js",
+  "observability": {
+    "enabled": true
+  },
+  "assets": {
+    "directory": ".",
+    "binding": "ASSETS"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "slowdial-waitlist",
+      "database_id": "510a68fb-4f70-4630-915a-362ef2eff540"
+    }
+  ]
+}

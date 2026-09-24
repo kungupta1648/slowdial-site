@@ -1,14 +1,21 @@
-// Cloudflare Pages Function. Runs on Cloudflare's own servers, not in the
-// visitor's browser -- this is what lets the waitlist form save to a real
-// database with one tap, no mail app, no redirect.
-//
-// Needs a D1 database bound to this Pages project as the variable "DB"
-// (dashboard: Workers & Pages -> slowdial-site -> Settings -> Functions ->
-// D1 database bindings). Without that binding, env.DB is undefined and this
-// fails gracefully with a 500 rather than crashing -- see the checkist.
-export async function onRequestPost(context) {
-  const { request, env } = context;
+// The actual server for slowdial.app. This is a real Worker (not a Pages
+// Function) -- see README.md for why that distinction matters and what
+// broke before this file existed. wrangler.jsonc points "main" at this file
+// and declares the D1 binding ("DB") and the static-asset binding
+// ("ASSETS", serving everything in this folder) that this code relies on.
+export default {
+  async fetch(request, env) {
+    const url = new URL(request.url);
 
+    if (url.pathname === "/api/join" && request.method === "POST") {
+      return handleJoin(request, env);
+    }
+
+    return env.ASSETS.fetch(request);
+  },
+};
+
+async function handleJoin(request, env) {
   if (!env.DB) {
     return json({ ok: false, error: "not_configured" }, 500);
   }
